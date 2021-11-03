@@ -42,7 +42,7 @@ int pop()
 {
   if (isEmpty())
   {
-    fprintf(stderr, "ERROR: Stack is empty, NULL return instead");
+    fprintf(stderr, "ERROR: Stack is empty, NULL return instead\n");
     return NULL;
   }
 
@@ -67,7 +67,7 @@ int peek()
 {
   if (isEmpty())
   {
-    fprintf(stderr, "ERROR: Stack is empty, NULL return instead");
+    fprintf(stderr, "ERROR: Stack is empty, NULL return instead\n");
     return NULL;
   }
   return topOfStack->value;
@@ -113,8 +113,8 @@ int main()
   }
   for (int i = 0; i < 110; i++)
   {
-    printf("%d\n", peek());
-    printf("%d\n", pop());
+    printf("%d", peek());
+    printf("%d", pop());
   }
   return 0;
 }
