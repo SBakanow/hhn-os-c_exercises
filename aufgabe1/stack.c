@@ -2,53 +2,80 @@
 #include <stdio.h>
 #include "stack.h"
 
+int isEmpty();
+
 struct Stack {
   struct Stack *next;
-  struct Stack *prev;
   int depth;
   int capacity;
   int value;
-};
+} Stack_default = {NULL, 0, 100, 0};
 
-struct Stack* createStack()
+struct Stack* createEntry()
 {
   struct Stack* test = (struct Stack*) malloc(sizeof(struct Stack));
+  *test = Stack_default;
 
   return test;
 }
 
-struct Stack test;
+
+struct Stack* test;
+int depth;
+
 
 int pop() {
-  int buffer = test.value;
-  test = *test.prev;
-  free(test.next);
+  if(isEmpty())
+  {
+    fprintf(stderr, "ERROR: Stack is empty, NULL return instead");
+    return NULL;
+  }
+  struct Stack* bufferStack = test;
+  int buffer = test->value;
+  test = test->next;
+  free(bufferStack);
   return buffer;
+  //return test->depth;
 } 
 
 int peek() {
-  return 0;
+  if(isEmpty()) {
+    fprintf(stderr, "ERROR: Stack is empty, NULL return instead");
+    return NULL;
+  }
+  return test->value;
 }
 
 void push(int value) {
-  if(test.depth < test.capacity) {
-    test.next = (struct Stack*) malloc(sizeof(struct Stack));
-    test.prev = &test;
-    test = *test.next;
-    test.depth++;
-    test.capacity = 100;
-    test.value = value;
+  struct Stack* buffer = test;
+  test = createEntry();
+  if(buffer)
+  {
+    test->depth = buffer->depth;
+    test->depth++;
+    if(test->depth >= test->capacity) {
+      test = buffer;
+      fprintf(stderr, "ERROR: Size 100 of stack exeeded when adding value %d\n", value);
+      return;
+    }
   }
+  test->next = buffer;
+  test->value = value;
+}
+
+int isEmpty()
+{
+  return !test; //True if null
 }
 
 
 int main() {
-  test = *(struct Stack*) malloc(sizeof(struct Stack));
-  test.capacity = 100;
-  test.depth = 0;
-  push(2);
-  push(3);
-  printf("%d", pop());
-  printf("%d", pop());
+  for(int i = 0; i < 110; i++) {
+    push(i);
+  }
+  for(int i = 0; i < 100; i++) {
+    printf("%d\n", peek());
+    printf("%d\n", pop());
+  }
   return 0;
 }
