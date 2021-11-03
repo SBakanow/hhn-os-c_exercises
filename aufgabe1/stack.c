@@ -2,78 +2,117 @@
 #include <stdio.h>
 #include "stack.h"
 
+#define CAPACITY 100
+
+//Prototyp
 int isEmpty();
 
-struct Stack {
-  struct Stack *next;
-  int depth;
-  int capacity;
-  int value;
-} Stack_default = {NULL, 0, 100, 0};
-
-struct Stack* createEntry()
+/**
+ * @brief Structure of the list stack
+ * 
+ */
+typedef struct Stack
 {
-  struct Stack* test = (struct Stack*) malloc(sizeof(struct Stack));
-  *test = Stack_default;
+  struct Stack *previousEntry;
+  int value;
+} Stack_t;
 
-  return test;
+
+//Create the global variables.
+static Stack_t *topOfStack = NULL;
+static int depthOfStack = 0;
+
+
+/**
+ * @brief Allocate new memory with the size of the stack structure.
+ * 
+ * @return Stack_t* The memory address of the new entry to the stack.
+ */
+Stack_t *createEntry()
+{
+  return (Stack_t *) malloc(sizeof(Stack_t));
 }
 
-
-struct Stack* test;
-int depth;
-
-
-int pop() {
-  if(isEmpty())
+/**
+ * @brief Get the top of the stack and delete it.
+ * 
+ * @return int The value of the top of the stack or NULL if empty.
+ */
+int pop()
+{
+  if (isEmpty())
   {
     fprintf(stderr, "ERROR: Stack is empty, NULL return instead");
     return NULL;
   }
-  struct Stack* bufferStack = test;
-  int buffer = test->value;
-  test = test->next;
-  free(bufferStack);
+
+  Stack_t *bufferStack = topOfStack; //Save pointer on another pointer
+
+  int buffer = bufferStack->value; //Buffer the variable from the top of the stack
+  topOfStack = bufferStack->previousEntry; //Replace old entry with the previous entry
+
+  free(bufferStack); //Free the adresse space
+
+  depthOfStack--; //Reduce the depth
+
   return buffer;
-  //return test->depth;
-} 
+}
 
-int peek() {
-  if(isEmpty()) {
+/**
+ * @brief Peek at the value at the top of the stack.
+ * 
+ * @return int Value of the top of the stack or NULL if empty
+ */
+int peek()
+{
+  if (isEmpty())
+  {
     fprintf(stderr, "ERROR: Stack is empty, NULL return instead");
     return NULL;
   }
-  return test->value;
+  return topOfStack->value;
 }
 
-void push(int value) {
-  struct Stack* buffer = test;
-  test = createEntry();
-  if(buffer)
+/**
+ * @brief Add a new value on top of the stack.
+ * 
+ * @param value The value that will be added at the top of the stack if there is still a space open.
+ */
+void push(int value)
+{
+  if (depthOfStack == CAPACITY) //Check if max capacity is already reached
   {
-    test->depth = buffer->depth;
-    test->depth++;
-    if(test->depth >= test->capacity) {
-      test = buffer;
-      fprintf(stderr, "ERROR: Size 100 of stack exeeded when adding value %d\n", value);
-      return;
-    }
+    fprintf(stderr, "ERROR: Size %d of stack exeeded when adding value %d\n", CAPACITY, value);
+    return;
   }
-  test->next = buffer;
-  test->value = value;
+
+  Stack_t *bufferStack = topOfStack; //Buffer the top of the stack
+  topOfStack = createEntry(); //Get a new memory addresse for the new entry
+
+  topOfStack->value = value; //Add the value on top of the stack
+  topOfStack->previousEntry = bufferStack; //Save the old top of the stack into the previous entry of the stack.
+
+  depthOfStack++; //Add one to the depth of the stack
 }
 
+/**
+ * @brief Check if the stack is Empty.
+ * 
+ * @return int If the stack is empty it will negate the NULL and therfore send back an value not equal 0.
+ */
 int isEmpty()
 {
-  return !test; //True if null
+  return !topOfStack;
 }
 
-
-int main() {
-  for(int i = 0; i < 110; i++) {
+int main()
+{
+  for (int i = 0; i < 110; i++)
+  {
     push(i);
   }
-  for(int i = 0; i < 100; i++) {
+  for (int i = 0; i < 110; i++)
+  {
     printf("%d\n", peek());
     printf("%d\n", pop());
   }
