@@ -104,17 +104,3 @@ int isEmpty()
 {
   return !topOfStack;
 }
-
-int main()
-{
-  for (int i = 0; i < 110; i++)
-  {
-    push(i);
-  }
-  for (int i = 0; i < 110; i++)
-  {
-    printf("%d", peek());
-    printf("%d", pop());
-  }
-  return 0;
-}
