@@ -3,6 +3,8 @@
 //
 #include <stdio.h>
 #include "stack.h"
+#include "freeList.h"
+
 int main(int count, char *args[]) {
     push(10);
     printf("%d", pop());
