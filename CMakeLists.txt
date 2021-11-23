@@ -11,6 +11,7 @@ include_directories(${PROJECT_SOURCE_DIR}
 file(GLOB main "${PROJECT_SOURCE_DIR}/main.c")
 file(GLOB stack "${PROJECT_SOURCE_DIR}/aufgabe1/*.c")
 file(GLOB freelist "${PROJECT_SOURCE_DIR}/aufgabe2/*.c")
+file(GLOB freelistEasy "${PROJECT_SOURCE_DIR}/aufgabe2/freeListEasy.c")
 
 add_executable(main
-                ${main} ${stack} ${freelist})
+                ${main} ${freelistEasy})
