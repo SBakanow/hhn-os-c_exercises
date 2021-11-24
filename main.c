@@ -1,9 +1,7 @@
 //
 // Created by Marvin Simon on 10.11.21.
 //
-#include <stdio.h>
-#include "stack.h"
-#include "freeListEasy.h"
+#include "freelist.h"
 
 int main(int count, char *args[]) {
     insert(position(50), 50);

@@ -1,10 +1,6 @@
-//
-// Created by Marvin Simon on 23.11.21.
-//
-
 #include <stdbool.h>
 #include <stdio.h>
-#include "freeListEasy.h"
+#include "freelist.h"
 
 
 #define MAIN_MEMORY 1000

@@ -7,11 +7,12 @@ set(CMAKE_C_STANDARD 11)
 include_directories(${PROJECT_SOURCE_DIR}
         ${PROJECT_SOURCE_DIR}/aufgabe1
         ${PROJECT_SOURCE_DIR}/aufgabe2)
+        #${PROJECT_SOURCE_DIR}/freeListNodes)
 
 file(GLOB main "${PROJECT_SOURCE_DIR}/main.c")
 file(GLOB stack "${PROJECT_SOURCE_DIR}/aufgabe1/*.c")
 file(GLOB freelist "${PROJECT_SOURCE_DIR}/aufgabe2/*.c")
-file(GLOB freelistEasy "${PROJECT_SOURCE_DIR}/aufgabe2/freeListEasy.c")
+#file(GLOB freeListNodes "${PROJECT_SOURCE_DIR}/freeListNodes/*.c")
 
 add_executable(main
-                ${main} ${freelistEasy})
+                ${main} ${freelist})
