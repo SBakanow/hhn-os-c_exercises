@@ -74,6 +74,7 @@ void free(int position) {
         for (int i = position; i < position+freeListMemory[position].reservedMemory; ++i) {
             freeListMemory[i].reserved = false;
         }
+        restMemory += freeListMemory[position].reservedMemory;
         freeListMemory[position].location = 0;
         freeListMemory[position].reservedMemory = 0;
     }
