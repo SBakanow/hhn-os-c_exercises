@@ -3,17 +3,13 @@
 //
 #include <stdint.h>
 #include <stdio.h>
-#include <pthread.h>
 #include "canonicalDevice.h"
 
 #define MAX_MEMORY 1024
 
 void readData(void);
-
 void resetData(void);
-
 void deleteData(void);
-
 void writeData(void);
 
 static int16_t internalMemory[MAX_MEMORY];
