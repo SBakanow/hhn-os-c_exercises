@@ -5,7 +5,7 @@
 #ifndef HHN_C_CANOCICALDEVICE_H
 #define HHN_C_CANOCICALDEVICE_H
 
-#include <semaphore.h>
+#include <stdint.h>
 
 #define DATA_LENGTH 20
 
@@ -25,13 +25,10 @@ typedef enum command_e{
 
 
 void* run(__attribute__((unused)) void* attr);
-void closeDevice(void);
+void disconnectDevice(void);
 
 
-status_e status;
-command_e command;
-int16_t data[DATA_LENGTH];
-sem_t *emptymutex;
-sem_t *fullmutex;
-sem_t *commandmutex;
+uint8_t status;
+uint8_t command;
+int8_t data[DATA_LENGTH];
 #endif //HHN_C_CANOCICALDEVICE_H

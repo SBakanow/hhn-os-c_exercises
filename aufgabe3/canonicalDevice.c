@@ -44,7 +44,7 @@ void *run(__attribute__((unused)) void *attr) {
                 writeData();
                 break;
             default:
-                closeDevice();
+                printf("Invalid Command");
                 break;
         }
     }
@@ -72,7 +72,7 @@ void readData() {
         printf("%d ", internalMemory[i]);
     }
     printf("\n");
-    printf("Pointer length: %d", internalPointer);
+    printf("Pointer length: %d\n", internalPointer);
     internalPointer = 0;
     status = ready;
 }
@@ -91,7 +91,7 @@ void writeData() {
     status = ready;
 }
 
-void closeDevice(void) {
+void disconnectDevice(void) {
     while (command != idle || status == busy);
     flag = 0;
     command = reset;
