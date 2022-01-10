@@ -10,6 +10,7 @@
 void call(void);
 void writeRandomData(uint16_t byteCount);
 void resetDevice(void);
+void deleteDevice(void);
 
 int main(int count, char *args[]) {
     pthread_t runDriver;
@@ -36,7 +37,7 @@ void call(void) {
     while (command != idle || status == busy);
     command = read;
 
-    resetDevice();
+    deleteDevice();
     writeRandomData(256);
     while (command != idle || status == busy);
     command = read;
@@ -45,12 +46,13 @@ void call(void) {
 
 void resetDevice(void) {
     while (command != idle || status == busy);
-    command = delete;
-
-    while (command != idle || status == busy);
     command = reset;
 }
 
+void deleteDevice(void) {
+    while (command != idle || status == busy);
+    command = delete;
+}
 
 void writeRandomData(uint16_t byteCount) {
     for (uint16_t i = 0; i < byteCount; ++i) {
